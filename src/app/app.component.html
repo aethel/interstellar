@@ -1,6 +1,87 @@
 <main>
-  <agm-map [latitude]="lat" [longitude]="lng">
+  <!-- <agm-map [latitude]="lat" [longitude]="lng">
     <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-  </agm-map>
+  </agm-map> -->
+  {{ lat }}{{ lng }}
+  <aol-map [width]="'500px'" [height]="'500px'">
+    <aol-interaction-default></aol-interaction-default>
+    <aol-view [zoom]="12">
+      <aol-coordinate [x]="lng" [y]="lat" [srid]="'EPSG:4326'"></aol-coordinate>
+    </aol-view>
+    <aol-layer-tile [opacity]="0.5">
+      <aol-source-osm></aol-source-osm>
+    </aol-layer-tile>
+    <!-- <aol-layer-vector [opacity]="1">
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate
+              [x]="lng"
+              [y]="lat"
+              [srid]="'EPSG:4326'"
+            ></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-circle [radius]="100">
+              <aol-style-stroke
+                [color]="'#000'"
+                [width]="'500px'"
+              ></aol-style-stroke>
+              <aol-style-fill [color]="'#ff00ff'"></aol-style-fill>
+            </aol-style-circle>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector> -->
+    <aol-layer-vector [opacity]="1">
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate
+              [x]="lng"
+              [y]="lat"
+              [srid]="'EPSG:4326'"
+            ></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-icon
+              [src]="
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/564px-Map_pin_icon.svg.png'
+              "
+              [anchor]="[0.5, 1]"
+              [anchorXUnits]="'fraction'"
+              [anchorYUnits]="'fraction'"
+              [scale]="0.05"
+              [anchorOrigin]="'bottom-center'"
+            >
+            </aol-style-icon>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+    <!-- <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-polygon>
+            <aol-collection-coordinates
+              [coordinates]="[
+                [1.47, 43.545],
+                [1.51, 43.545],
+                [1.51, 43.565],
+                [1.47, 43.565]
+              ]"
+              [srid]="'EPSG:4326'"
+            >
+            </aol-collection-coordinates>
+          </aol-geometry-polygon>
+          <aol-style>
+            <aol-style-stroke [color]="'red'" [width]="2"></aol-style-stroke>
+            <aol-style-fill [color]="[255, 0, 0, 0.1]"></aol-style-fill>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector> -->
+  </aol-map>
+
   <span *ngFor="let item of (geoData$ | async)"> {{ item }} test</span>
 </main>

@@ -3,6 +3,7 @@ import { DataService } from './core/services';
 import { InitialLocation } from './core/consts';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SourceVectorComponent } from 'ngx-openlayers';
 
 @Component({
   selector: 'is-root',
