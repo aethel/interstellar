@@ -17,8 +17,18 @@ export class AppComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    this.geoData$ = this.dataService
-      .getData()
-      .pipe(map(response => response.features));
+    this.geoData$ = this.dataService.getData().pipe(
+      map(response => response.features),
+      map(item => this.flattenNestedArray(item, 2))
+    );
+  }
+
+  private flattenNestedArray(array, level: number) {
+    array.forEach(innerArray => {
+      innerArray.geometry.coordinates = innerArray.geometry.coordinates.flat(
+        level
+      );
+    });
+    return array;
   }
 }
