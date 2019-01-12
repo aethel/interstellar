@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './core/services';
-import { InitialLocation } from './core/consts';
+import { InitialLocation, ColourMap } from './core/consts';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SourceVectorComponent } from 'ngx-openlayers';
 
 @Component({
   selector: 'is-root',
@@ -23,7 +22,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  private flattenNestedArray(array, level: number) {
+  private flattenNestedArray(array, level: number): any[] {
     array.forEach(innerArray => {
       innerArray.geometry.coordinates = innerArray.geometry.coordinates.flat(
         level
@@ -31,4 +30,6 @@ export class AppComponent implements OnInit {
     });
     return array;
   }
+
+  getColour(age: number): string {}
 }
