@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './core/services';
-import { InitialLocation, ColourMap } from './core/consts';
+import { InitialLocation, ColourMap, PopupCoords } from './core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MapBrowserEvent } from 'openlayers';
 
 @Component({
   selector: 'is-root',
@@ -12,6 +13,8 @@ import { map } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   lat: number = InitialLocation.lat;
   lng: number = InitialLocation.lng;
+
+  popupCoordinates: PopupCoords = { x: 0, y: 0 };
   geoData$: Observable<any>;
   constructor(private dataService: DataService) {}
 
@@ -44,5 +47,9 @@ export class AppComponent implements OnInit {
       default:
         return ColourMap.upTo40;
     }
+  }
+
+  setPopupCoordinates(event: MapBrowserEvent): void {
+    [this.popupCoordinates.x, this.popupCoordinates.y] = event.coordinate;
   }
 }

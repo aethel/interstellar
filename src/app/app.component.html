@@ -1,5 +1,10 @@
 <main>
-  <aol-map [width]="'500px'" [height]="'500px'">
+  <aol-map
+    [width]="'500px'"
+    [height]="'500px'"
+    class="map"
+    (onSingleClick)="setPopupCoordinates($event)"
+  >
     <aol-interaction-default></aol-interaction-default>
     <aol-view [zoom]="12">
       <aol-coordinate [x]="lng" [y]="lat" [srid]="'EPSG:4326'"></aol-coordinate>
@@ -16,23 +21,26 @@
             </aol-collection-coordinates>
           </aol-geometry-polygon>
           <aol-style>
-            <aol-style-text [text]="item.properties.name"></aol-style-text>
-            <aol-style-stroke [color]="'red'" [width]="2"></aol-style-stroke>
+            <aol-style-text
+              [text]="item.properties.name"
+              [font]="'20px sans-serif'"
+            ></aol-style-text>
+            <aol-style-stroke [color]="'red'" [width]="1"></aol-style-stroke>
             <aol-style-fill
               [color]="getColour(item.properties.averageAge)"
             ></aol-style-fill>
           </aol-style>
-          <!-- <aol-overlay>
+          <aol-overlay>
             <aol-coordinate
-              [x]="item.geometry.coordinates[0][0]"
-              [y]="item.geometry.coordinates[0][1]"
+              [x]="popupCoordinate.x"
+              [y]="popupCoordinate.y"
               [srid]="'EPSG:4326'"
             >
             </aol-coordinate>
             <aol-content>
               <div class="my-overlay-class"><h1>This is an overlay</h1></div>
             </aol-content>
-          </aol-overlay> -->
+          </aol-overlay>
         </aol-feature>
       </aol-source-vector>
     </aol-layer-vector>
