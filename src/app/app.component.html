@@ -1,8 +1,4 @@
 <main>
-  <!-- <agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-  </agm-map> -->
-  {{ lat }}{{ lng }}
   <aol-map [width]="'500px'" [height]="'500px'">
     <aol-interaction-default></aol-interaction-default>
     <aol-view [zoom]="12">
@@ -21,10 +17,12 @@
           </aol-geometry-polygon>
           <aol-style>
             <aol-style-text [text]="item.properties.name"></aol-style-text>
-            <aol-style-stroke [color]="'blue'" [width]="2"></aol-style-stroke>
-            <aol-style-fill [color]="[255, 0, 0, 0.2]"></aol-style-fill>
+            <aol-style-stroke [color]="'red'" [width]="2"></aol-style-stroke>
+            <aol-style-fill
+              [color]="getColour(item.properties.averageAge)"
+            ></aol-style-fill>
           </aol-style>
-          <aol-overlay>
+          <!-- <aol-overlay>
             <aol-coordinate
               [x]="item.geometry.coordinates[0][0]"
               [y]="item.geometry.coordinates[0][1]"
@@ -34,7 +32,7 @@
             <aol-content>
               <div class="my-overlay-class"><h1>This is an overlay</h1></div>
             </aol-content>
-          </aol-overlay>
+          </aol-overlay> -->
         </aol-feature>
       </aol-source-vector>
     </aol-layer-vector>

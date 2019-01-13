@@ -31,5 +31,18 @@ export class AppComponent implements OnInit {
     return array;
   }
 
-  getColour(age: number): string {}
+  getColour(age: number): number[] {
+    switch (true) {
+      case age <= 42:
+        return ColourMap.upTo42;
+      case age <= 43:
+        return ColourMap.upTo43;
+      case age <= 45:
+        return ColourMap.upTo45;
+      case age <= 50:
+        return ColourMap.upTo50;
+      default:
+        return ColourMap.upTo40;
+    }
+  }
 }
