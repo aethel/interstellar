@@ -1,7 +1,10 @@
 .overlay {
   background: #fff;
   padding: 5px;
-  min-width: 50px;
+  min-width: 110px;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 }
 
 .overlay__content {
