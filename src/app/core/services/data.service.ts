@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GeodataLink } from './../../core';
+import { GeodataLink } from './../../core/consts';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
