@@ -1,20 +1,89 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+<main>
+  <aol-map
+    [width]="'100%'"
+    [height]="'100vh'"
+    class="map"
+    (onSingleClick)="showPopup($event)"
+  >
+    <aol-interaction-default></aol-interaction-default>
+    <aol-view [zoom]="12">
+      <aol-coordinate [x]="lng" [y]="lat" [srid]="'EPSG:4326'"></aol-coordinate>
+    </aol-view>
+    <aol-layer-tile> <aol-source-osm> </aol-source-osm> </aol-layer-tile>
+    <!-- Layers with multipolygons -->
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature
+          *ngFor="let item of (geoData$ | async)"
+          (click)="showFeature(item)"
+        >
+          <!-- Multipolygon -->
+          <aol-geometry-polygon>
+            <aol-collection-coordinates
+              [coordinates]="item.geometry.coordinates"
+              [srid]="'EPSG:4326'"
+            >
+            </aol-collection-coordinates>
+          </aol-geometry-polygon>
+          <!-- Multipolygon label -->
+          <aol-style>
+            <aol-style-text
+              [text]="item.properties.name"
+              [font]="'20px sans-serif'"
+            ></aol-style-text>
+            <aol-style-stroke [color]="'red'" [width]="1"></aol-style-stroke>
+            <aol-style-fill
+              [color]="getColour(item.properties.averageAge)"
+            ></aol-style-fill>
+          </aol-style>
+          <!-- Multipolygon overlay -->
+          <aol-overlay>
+            <aol-coordinate
+              [x]="item.geometry.coordinates[0][0]"
+              [y]="item.geometry.coordinates[0][1]"
+              [srid]="'EPSG:4326'"
+            >
+            </aol-coordinate>
+            <aol-content>
+              <div class="overlay">
+                <span class="overlay__content"
+                  >District: {{ item.properties.name }}</span
+                >
+                <span class="overlay__content"
+                  >Population: {{ item.properties.population }}</span
+                >
+              </div>
+            </aol-content>
+          </aol-overlay>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+    <!-- Centre pin -->
+    <aol-layer-vector>
+      <aol-source-vector>
+        <aol-feature>
+          <aol-geometry-point>
+            <aol-coordinate
+              [x]="lng"
+              [y]="lat"
+              [srid]="'EPSG:4326'"
+            ></aol-coordinate>
+          </aol-geometry-point>
+          <aol-style>
+            <aol-style-icon
+              [src]="
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Map_pin_icon.svg/564px-Map_pin_icon.svg.png'
+              "
+              [anchor]="[0.5, 1]"
+              [anchorXUnits]="'fraction'"
+              [anchorYUnits]="'fraction'"
+              [scale]="0.05"
+              [anchorOrigin]="'bottom-center'"
+            >
+            </aol-style-icon>
+          </aol-style>
+        </aol-feature>
+      </aol-source-vector>
+    </aol-layer-vector>
+  </aol-map>
+</main>

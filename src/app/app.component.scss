@@ -1,0 +1,14 @@
+.overlay {
+  background: #fff;
+  padding: 5px;
+  min-width: 110px;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+}
+
+.overlay__content {
+  display: inline-block;
+  font-size: 12px;
+  width: 100%;
+}
