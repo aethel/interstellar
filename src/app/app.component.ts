@@ -52,7 +52,6 @@ export class AppComponent implements OnInit {
 
   showPopup(event: MapBrowserPointerEvent) {
     const map = event.map;
-
     this.popupVisible = true;
     const point = map.forEachFeatureAtPixel(event.pixel, function(
       feature,
@@ -60,6 +59,7 @@ export class AppComponent implements OnInit {
     ) {
       return feature;
     });
+    // In theory, this should enable me to create a popup in each feautre layer (multipolygon) with correct data. In theory :)
     console.log(point);
   }
 }

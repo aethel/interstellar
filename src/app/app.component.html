@@ -10,12 +10,14 @@
       <aol-coordinate [x]="lng" [y]="lat" [srid]="'EPSG:4326'"></aol-coordinate>
     </aol-view>
     <aol-layer-tile> <aol-source-osm> </aol-source-osm> </aol-layer-tile>
+    <!-- Layers with multipolygons -->
     <aol-layer-vector>
       <aol-source-vector>
         <aol-feature
           *ngFor="let item of (geoData$ | async)"
           (click)="showFeature(item)"
         >
+          <!-- Multipolygon -->
           <aol-geometry-polygon>
             <aol-collection-coordinates
               [coordinates]="item.geometry.coordinates"
@@ -23,6 +25,7 @@
             >
             </aol-collection-coordinates>
           </aol-geometry-polygon>
+          <!-- Multipolygon label -->
           <aol-style>
             <aol-style-text
               [text]="item.properties.name"
@@ -33,6 +36,7 @@
               [color]="getColour(item.properties.averageAge)"
             ></aol-style-fill>
           </aol-style>
+          <!-- Multipolygon overlay -->
           <aol-overlay>
             <aol-coordinate
               [x]="item.geometry.coordinates[0][0]"
@@ -54,6 +58,7 @@
         </aol-feature>
       </aol-source-vector>
     </aol-layer-vector>
+    <!-- Centre pin -->
     <aol-layer-vector>
       <aol-source-vector>
         <aol-feature>
