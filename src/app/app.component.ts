@@ -3,7 +3,7 @@ import { DataService } from './core/services';
 import { InitialLocation, ColourMap, PopupCoords } from './core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MapBrowserEvent } from 'openlayers';
+import { MapBrowserPointerEvent } from 'openlayers';
 
 @Component({
   selector: 'is-root',
@@ -13,9 +13,10 @@ import { MapBrowserEvent } from 'openlayers';
 export class AppComponent implements OnInit {
   lat: number = InitialLocation.lat;
   lng: number = InitialLocation.lng;
-
+  popupVisible = false;
   popupCoordinates: PopupCoords = { x: 0, y: 0 };
   geoData$: Observable<any>;
+
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
@@ -49,7 +50,16 @@ export class AppComponent implements OnInit {
     }
   }
 
-  setPopupCoordinates(event: MapBrowserEvent): void {
-    [this.popupCoordinates.x, this.popupCoordinates.y] = event.coordinate;
+  showPopup(event: MapBrowserPointerEvent) {
+    const map = event.map;
+
+    this.popupVisible = true;
+    const point = map.forEachFeatureAtPixel(event.pixel, function(
+      feature,
+      layer
+    ) {
+      return feature;
+    });
+    console.log(point);
   }
 }

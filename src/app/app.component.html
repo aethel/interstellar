@@ -1,9 +1,9 @@
 <main>
   <aol-map
-    [width]="'500px'"
-    [height]="'500px'"
+    [width]="'100%'"
+    [height]="'100%'"
     class="map"
-    (onSingleClick)="setPopupCoordinates($event)"
+    (onSingleClick)="showPopup($event)"
   >
     <aol-interaction-default></aol-interaction-default>
     <aol-view [zoom]="12">
@@ -12,7 +12,10 @@
     <aol-layer-tile> <aol-source-osm> </aol-source-osm> </aol-layer-tile>
     <aol-layer-vector>
       <aol-source-vector>
-        <aol-feature *ngFor="let item of (geoData$ | async)">
+        <aol-feature
+          *ngFor="let item of (geoData$ | async)"
+          (click)="showFeature(item)"
+        >
           <aol-geometry-polygon>
             <aol-collection-coordinates
               [coordinates]="item.geometry.coordinates"
@@ -32,13 +35,20 @@
           </aol-style>
           <aol-overlay>
             <aol-coordinate
-              [x]="popupCoordinate.x"
-              [y]="popupCoordinate.y"
+              [x]="item.geometry.coordinates[0][0]"
+              [y]="item.geometry.coordinates[0][1]"
               [srid]="'EPSG:4326'"
             >
             </aol-coordinate>
             <aol-content>
-              <div class="my-overlay-class"><h1>This is an overlay</h1></div>
+              <div class="overlay">
+                <span class="overlay__content"
+                  >District: {{ item.properties.name }}</span
+                >
+                <span class="overlay__content"
+                  >Population: {{ item.properties.population }}</span
+                >
+              </div>
             </aol-content>
           </aol-overlay>
         </aol-feature>
@@ -71,9 +81,4 @@
       </aol-source-vector>
     </aol-layer-vector>
   </aol-map>
-
-  <span *ngFor="let item of (geoData$ | async)">
-    {{ item.properties.name }} {{ item.properties.population }}
-    {{ item.properties.averageAge }}
-  </span>
 </main>

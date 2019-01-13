@@ -3,4 +3,6 @@ export interface Location {
   lng: number;
 }
 
-export type PopupCoords = { [key: string]: number };
+export interface PopupCoords {
+  [key: string]: number;
+}
